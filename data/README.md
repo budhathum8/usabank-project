@@ -4,13 +4,13 @@ USA Bank Financial Data from [kaggle](https://www.kaggle.com/datasets/vishalsing
 
 ## Calendar
 
-| field| description | cleaning notes | 
+| field| type | description| 
 | -----| ----------- | -------------- |
-| date | | |
-| Net_Income | | |
-| Total_Assets | | |
-| Market_Share | | |
-| Stock_Price | | |
+| date | date | fromate is DD-MM-YYYY |
+| Net_Income | strating | with "$" and a float with 2 decimal |
+| Total_Assets | straing | with "$" and a float with 2 decimal places |
+| Market_Share | string | with "$" and a float with 2 decimal places |
+| Stock_Price | string | with "$" and a float with 2 decimal places |
 
 ## Reviews
 
