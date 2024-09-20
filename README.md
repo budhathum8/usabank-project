@@ -29,8 +29,10 @@ Steps:
 
 ## Project Layout
 
-- README.md: general information about the project.
-- data/raw: raw data files.
-- data/clean: cleaned data files.
-- data/README.md: data dictionary.
-- src: jupyter notebooks and python scripts.
+| File | Description|
+
+| README.md | general information about the project |
+| data/raw | raw data files |
+| data/clean| cleaned data files |
+| data/README.md | data dictionary |
+| src | jupyter notebooks and python scripts |
