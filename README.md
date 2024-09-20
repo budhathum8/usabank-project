@@ -18,12 +18,14 @@ Steps:
 ## Getting Started
 
 1. Clone this repo.
-2. 
+2. Creat a virtual environment and install the packages listed in the requirements.txt file.
+3. 
 
 ## Capstone Project Criteria
 
-1. REDME file provides information about the project and how to use the code.
-2. 
+1. This REDME file provides information about the project and how to use the code.
+2. data/README.md provides data dictionary for the data used in the project.
+3. 
 
 ## Project Layout
 
@@ -32,8 +34,3 @@ Steps:
 - data/clean: cleaned data files.
 - data/README.md: data dictionary.
 - src: jupyter notebooks and python scripts.
-
-
-
-
-
