@@ -28,14 +28,14 @@ USA Bank Financial Data from [kaggle](https://www.kaggle.com/datasets/vishalsing
 
 ## Listings
 
-| Date | | |
-| Interest_Income | | |
-| Interest_Expense | | |
-| Average_Earning_Assets | | |
-| Net_Income | | |
-| Total_Assets | | |
-| Shareholder_Equity | | |
-| Operating_Expenses | | |
-| Operating_Income | | |
-| Market_Share | | |
-| Stock_Price | | |
+| Date | non-null | object |
+| Interest_Income | non-null | float64 |
+| Interest_Expense | non-null | int64 |
+| Average_Earning_Assets | non-null | int64 |
+| Net_Income | non-null | float64 |
+| Total_Assets | non-null | int64 |
+| Shareholder_Equity | non-null | int64 |
+| Operating_Expenses | non-null | int64 |
+| Operating_Income | non-null | int64 |
+| Market_Share | non-null | int64 |
+| Stock_Price | non-null | int64 |
