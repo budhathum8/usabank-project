@@ -28,6 +28,8 @@ USA Bank Financial Data from [kaggle](https://www.kaggle.com/datasets/vishalsing
 
 ## Listings
 
+| Colimn | Non-Null | Dtype |
+| ------ | -------- | ----- |
 | Date | non-null | object |
 | Interest_Income | non-null | float64 |
 | Interest_Expense | non-null | int64 |
