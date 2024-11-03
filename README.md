@@ -25,12 +25,12 @@ Steps:
 
 1. This REDME file provides information about the project and how to use the code.
 2. data/README.md provides data dictionary for the data used in the project.
-3. 
+3. sec myusabank.ipynb provide data importing, cleaning, analysis and foreasting.
 
 ## Project Layout
 
 - README.md: general information about the project.
 - data/raw: raw data files.
-- data/clean: cleaned data files.
+- src/clean: cleaned data files.
 - data/README.md: data dictionary.
 - src:  jupyter notebooks and python scripts.

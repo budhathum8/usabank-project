@@ -20,11 +20,11 @@ USA Bank Financial Data from [kaggle](https://www.kaggle.com/datasets/vishalsing
 
 | field| description | cleaning notes | 
 | -----| ----------- | -------------- |
-| date | | |
-| Net_Income | | |
-| reviewer_Assets | | |
-| reviewer_Share | | |
-| comments | | |
+| date | Data was collected or reviewed| Remove any incorrect or incomplete dates if needed |
+| Net_Income | Net income amount should be a numeric value | Remove currency symbols for missing or negative values if unexpected. |
+| reviewer_Assets | Ensure it's numeric | Remove any unnecessary symbols |
+| reviewer_Share | This could be a percentage or proportion | Ensure the value is in percentage form, without symbols like % |
+| comments | Any additional notes or context provided by the reviewer | Remove irrelevant comments if needed |
 
 ## Listings
 
