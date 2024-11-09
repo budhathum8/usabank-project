@@ -1,6 +1,6 @@
 # USA Bank Financial Data Analysis
 
-This is a capstone project  for Code:You Data Analysis course. This project will analyse  identify correlations between different financial indicators. USA Bank Financial data  contains daily financial data for a fictional bank (MyUSA Bank) over a two-year period and it includes various key financial metrics. The data is structured to simulate realistic scenarios in the banking sector, including outliers, duplicates, and missing values for educational purposes.
+This is a capstone project for Code:You Data Analysis course. This project will analyses identifying correlations between different financial indicators. This project investigates the financial relationship and performance comparison between MyUSA Bank and the S&P 500 (SPX). Using historical financial data over a two-year period.  The project analyzes and it includes various key financial metrics. The data is structured to simulate realistic scenarios in the banking sector, including outliers, duplicates, and missing values for educational purposes.
 
 **Goal:**
 The dataset aims to provide hands-on experience in data preprocessing, analysis, and visualization within the context of banking and finance.
@@ -19,13 +19,16 @@ Steps:
 
 1. Clone this repo.
 2. Creat a virtual environment and install the packages listed in the requirements.txt file.
-3. 
+3. Import the necessary libraries and load the dataset into a pandas DataFrame.
+4. Data cleaning, Preprocessing , analysis and foreasting.
 
 ## Capstone Project Criteria
 
 1. This REDME file provides information about the project and how to use the code.
 2. data/README.md provides data dictionary for the data used in the project.
-3. sec myusabank.ipynb provide data importing, cleaning, analysis and foreasting.
+3. src/myusabank.ipynb provide data importing, cleaning, analysis and foreasting on the myusabank.
+4. src/S&P500(SPX).ipynb provide data importing, cleaning on the S&P500(SPX).
+5. src/Mergr_myusabank_S&P500.ipynb provide data  analysis and foreasting on the Project.
 
 ## Project Layout
 
