@@ -66,3 +66,11 @@ S&P 500 (SPX) Historical Data from [Nasdaq](https://www.nasdaq.com/market-activi
 | Open | non-null | float64 |
 | High | non-null | float64 |
 | Low | non-null | float64 |
+
+## Merge column (myusabank and S&P500(SPX)) and New column name
+
+| Column | New column Name | Dtype |
+| ------ | --------------- | ----- |
+| Date | Date |  datetime64[ns] |
+| Stock_Price | Bank_Stock_Price | int64 |
+| Close/Last  | S&P500 | float64 |
