@@ -26,16 +26,20 @@ Steps:
 
 1. This REDME file provides information about the project and how to use the code.
 2. data/README.md provides data dictionary for the data used in the project.
-3. src/01_Data_Cleaning_myusabank.ipynb provide raw data importing, cleaning on the myusabank.
-4. src/02_Data_Cleaning_S&P500(SPX).ipynb provide raw data importing, cleaning on the S&P500(SPX).
-5. src/03_Mergr_myusabank_S&P500.ipynb provide clean data analysis and foreasting on the Project.
-6. src/04_Data_forecasting.ipynb provide data foreasting on the Project.
-7. src/05_Data Analysis.ipynb provide  data analysis  on the Project.
+3. data/raw/myusabank.csv provide raw data from [kaggle](https://www.kaggle.com/datasets/vishalsinghsangral/usa-bank-financial-data).
+4. data/raw/S&P 500 (SPX)HistoricalData_1730734525504.csv provide raw data from [Nasdaq](https://www.nasdaq.com/market-activity/index/spx/historical?page=1&rows_per_page=10&timeline=y10).
+5. src/01_Data_Cleaning_myusabank.ipynb provide raw data importing from the myusabank, cleaning data and save the clean data.
+6. src/02_Data_Cleaning_S&P500(SPX).ipynb provide raw data importing from the S&P500(SPX), cleaning data and save the clean data.
+7. src/03_Mergr_myusabank_S&P500.ipynb provide clean data importing from 01_myusabank_clean_data.csv and 02_S&P500(SPX)_clean_data.csv for merge data and save the merge data to analysis and foreasting on the Project.
+8. src/04_Data_forecasting.ipynb provide data foreasting on the Project and save the forecasting data.
+9. src/05_Data Analysis.ipynb provide  data analysis  on the Project.
 
 ## Project Layout
 
 - README.md: general information about the project.
 - data/raw: raw data files.
-- src/clean: cleaned data files.
+- data/clean: cleaned data files.
 - data/README.md: data dictionary.
-- src:  jupyter notebooks and python scripts.
+- src: data cleaning, merge, analysis, and forecasting files.
+- src: jupyter notebooks and python scripts.
+- requirements.txt: install the packages listed file

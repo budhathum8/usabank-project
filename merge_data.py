@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt # For visualizing data.
 import datetime
 
 # Load the bank data
-df = pd.read_csv(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\01_myusabank_clean_data.csv")
+df = pd.read_csv(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\raw\myusabank.csv")
 df['Date'] = pd.to_datetime(df['Date'])
 
 # Load the S&P 500 data
-spx_df = pd.read_csv(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\02_S&P500(SPX)_clean_data.csv")
+spx_df = pd.read_csv(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\raw\S&P 500 (SPX)HistoricalData_1730734525504.csv")
 spx_df['Date'] = pd.to_datetime(spx_df['Date'])
 
 # Define the date range
