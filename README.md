@@ -17,7 +17,7 @@ Steps:
 
 ## Getting Started
 
-1. Clone this repo.
+1. Clone this repository from [usabank-project](https://github.com/budhathum8/usabank-project.git)
 2. Creat a virtual environment and install the packages listed in the requirements.txt file.
 3. Import the necessary libraries and load the dataset into a pandas DataFrame.
 4. Data cleaning, Preprocessing , analysis and foreasting.
@@ -43,3 +43,4 @@ Steps:
 - src: data cleaning, merge, analysis, and forecasting files.
 - src: jupyter notebooks and python scripts.
 - requirements.txt: install the packages listed file
+- tests.py: Automated Code Testing (tests.py  tests will validate different aspects of script).
