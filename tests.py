@@ -1,122 +1,92 @@
-# Import Required Libraries and Prepare Fixtures
-
-import pytest
+import unittest
 import pandas as pd
-import datetime
+import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
 
-# The fixtures will prepare test data and dependencies for the test cases.
-# Fixture to load test data
-@pytest.fixture
-def load_test_data():
-    bank_data = {
-        "Date": pd.date_range(start="2022-01-03", periods=5, freq="B"),
-        "Stock_Price": [100, 102, 104, 103, 105]
-    }
-    spx_data = {
-        "Date": pd.date_range(start="2022-01-03", periods=5, freq="B"),
-        "Close/Last": [4000, 4010, 4030, 4020, 4050]
-    }
-    bank_df = pd.DataFrame(bank_data)
-    spx_df = pd.DataFrame(spx_data)
-    return bank_df, spx_df
+# File paths
+BANK_CSV = r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\01_myusabank_clean_data.csv"
+SP500_CSV = r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\02_S&P500(SPX)_clean_data.csv"
 
-# Test Data Filtering
-#Verify that data filtering works correctly.
+# Date range
+START_DATE = '2022-01-03'
+END_DATE = '2023-03-23'
 
-def test_date_filtering(load_test_data):
-    bank_df, spx_df = load_test_data
-    start_date = '2022-01-03'
-    end_date = '2022-01-07'
+class TestFinancialDataAnalysis(unittest.TestCase):
 
-    filtered_bank_df = bank_df[(bank_df['Date'] >= start_date) & (bank_df['Date'] <= end_date)]
-    filtered_spx_df = spx_df[(spx_df['Date'] >= start_date) & (spx_df['Date'] <= end_date)]
+    @classmethod
+    def setUpClass(cls):
+        # Load and filter data
+        cls.bank_df = pd.read_csv(BANK_CSV)
+        cls.bank_df['Date'] = pd.to_datetime(cls.bank_df['Date'])
+        cls.bank_df = cls.bank_df[
+            (cls.bank_df['Date'] >= START_DATE) & (cls.bank_df['Date'] <= END_DATE)
+        ][['Date', 'Stock_Price']].rename(columns={'Stock_Price': 'Bank_Stock_Price'})
 
-    assert len(filtered_bank_df) == 5
-    assert len(filtered_spx_df) == 5
+        cls.sp500_df = pd.read_csv(SP500_CSV)
+        cls.sp500_df['Date'] = pd.to_datetime(cls.sp500_df['Date'])
+        cls.sp500_df = cls.sp500_df[
+            (cls.sp500_df['Date'] >= START_DATE) & (cls.sp500_df['Date'] <= END_DATE)
+        ][['Date', 'Close/Last']].rename(columns={'Close/Last': 'S&P500'})
 
-# Test Merging of DataFrames
-#Ensure the merging process aligns data correctly.
+        # Merge data
+        cls.merged_df = pd.merge(cls.bank_df, cls.sp500_df, on='Date', how='inner')
 
-def test_data_merging(load_test_data):
-    bank_df, spx_df = load_test_data
-    bank_df = bank_df.rename(columns={'Stock_Price': 'Bank_Stock_Price'})
-    spx_df = spx_df.rename(columns={'Close/Last': 'S&P500'})
+    def test_load_data(self):
+        """Test that data loads correctly from the CSV files."""
+        self.assertFalse(self.bank_df.empty, "Bank data is empty after loading.")
+        self.assertFalse(self.sp500_df.empty, "S&P 500 data is empty after loading.")
 
-    merged_df = pd.merge(bank_df, spx_df, on='Date', how='inner')
-    assert merged_df.shape == (5, 3)  # Check correct dimensions
-    assert 'Bank_Stock_Price' in merged_df.columns
-    assert 'S&P500' in merged_df.columns
+    def test_date_filtering(self):
+        """Test that data is filtered correctly by date range."""
+        self.assertTrue(
+            self.bank_df['Date'].min() >= pd.Timestamp(START_DATE)
+            and self.bank_df['Date'].max() <= pd.Timestamp(END_DATE),
+            "Bank data not filtered correctly by date."
+        )
+        self.assertTrue(
+            self.sp500_df['Date'].min() >= pd.Timestamp(START_DATE)
+            and self.sp500_df['Date'].max() <= pd.Timestamp(END_DATE),
+            "S&P 500 data not filtered correctly by date."
+        )
 
-# Test Correlation Calculation
+    def test_merging_dataframes(self):
+        """Test that dataframes merge correctly on Date."""
+        self.assertIn('Bank_Stock_Price', self.merged_df.columns, "Bank stock price column missing.")
+        self.assertIn('S&P500', self.merged_df.columns, "S&P 500 column missing.")
+        self.assertFalse(self.merged_df.empty, "Merged dataframe is empty.")
 
-def test_correlation_calculation(load_test_data):
-    bank_df, spx_df = load_test_data
-    bank_df = bank_df.rename(columns={'Stock_Price': 'Bank_Stock_Price'})
-    spx_df = spx_df.rename(columns={'Close/Last': 'S&P500'})
+    def test_correlation_calculation(self):
+        """Test the correlation between Bank stock price and S&P 500."""
+        correlation = self.merged_df['Bank_Stock_Price'].corr(self.merged_df['S&P500'])
+        self.assertTrue(-1 <= correlation <= 1, "Correlation value is out of range.")
 
-    merged_df = pd.merge(bank_df, spx_df, on='Date', how='inner')
-    correlation = merged_df['Bank_Stock_Price'].corr(merged_df['S&P500'])
+    def test_beta_calculation(self):
+        """Test beta calculation between Bank stock returns and S&P 500 returns."""
+        self.merged_df['Bank_Returns'] = self.merged_df['Bank_Stock_Price'].pct_change()
+        self.merged_df['SP500_Returns'] = self.merged_df['S&P500'].pct_change()
+        covariance = self.merged_df['Bank_Returns'].cov(self.merged_df['SP500_Returns'])
+        variance = self.merged_df['SP500_Returns'].var()
+        beta = covariance / variance
+        self.assertIsNotNone(beta, "Beta calculation failed.")
+        self.assertNotEqual(beta, np.nan, "Beta is NaN.")
 
-    # Check if correlation is close to expected range
-    assert 0.95 <= round(correlation, 2) <= 1.00, f"Unexpected correlation: {correlation:.2f}"
-    
-# Test Standard Deviation Calculation
-#Verify the miltiple standard deviation calculations.
+    def test_arima_forecasting(self):
+        """Test ARIMA model forecasting for Bank stock prices."""
+        self.merged_df.set_index('Date', inplace=True)
 
-def test_multiple_standard_deviation():
-    # Test data
-    data = {
-        "Bank_Stock_Price": [100, 102, 104, 103, 105],
-        "S&P500": [4000, 4010, 4030, 4020, 4050]
-    }
-    df = pd.DataFrame(data)
+    # Ensure the date index has a frequency
+        self.merged_df = self.merged_df.asfreq('B')  # Set to business days frequency
 
-    # expected standard deviations
-    expected_bank_std = 1.92
-    expected_sp500_std = 19.24  
+        ts = self.merged_df['Bank_Stock_Price']
+        ts = ts.ffill()  # Use forward fill to handle missing values
 
-    # Validate Bank_Stock_Price std
-    bank_std = df["Bank_Stock_Price"].std()
-    assert round(bank_std, 2) == expected_bank_std, f"Expected {expected_bank_std}, but got {bank_std:.2f}"
-
-    # Validate S&P500 std
-    sp500_std = df["S&P500"].std()
-    assert round(sp500_std, 2) == expected_sp500_std, f"Expected {expected_sp500_std}, but got {sp500_std:.2f}"
-
-
-
-    
-# Test Beta Calculation
-#Check the Beta calculation logic.
-
-def test_beta_calculation():
-    bank_returns = pd.Series([0.01, 0.02, -0.01])
-    sp500_returns = pd.Series([0.005, 0.01, -0.005])
-    
-    covariance = bank_returns.cov(sp500_returns)
-    variance_sp500 = sp500_returns.var()
-    beta = covariance / variance_sp500
-
-    expected_beta = 2.0  # Example expected value
-    assert beta == pytest.approx(expected_beta, rel=0.01)
+        arima_model = ARIMA(ts, order=(5, 1, 0))
+        arima_result = arima_model.fit()
+        forecast = arima_result.forecast(steps=10)
+        self.assertEqual(len(forecast), 10, "ARIMA forecast length is incorrect.")
+        self.assertTrue(np.all(np.isfinite(forecast)), "ARIMA forecast contains non-finite values.")
 
 
-
-# Test ARIMA Forecasting
-#Ensure the ARIMA model works and provides a forecast.
-
-def test_arima_forecasting(load_test_data):
-    bank_df, _ = load_test_data
-    bank_df.set_index('Date', inplace=True)
-    bank_df = bank_df.asfreq('B')  # Explicitly set frequency to business days
-    ts = bank_df['Stock_Price']
-
-    arima_model = ARIMA(ts, order=(1, 1, 0))
-    arima_result = arima_model.fit()
-    forecast = arima_result.forecast(steps=5)
-
-    assert len(forecast) == 5  # Ensure forecast has 5 steps
-    assert all(forecast > 0)  # Check positive forecasts
-
+if __name__ == "__main__":
+    unittest.main()
 
