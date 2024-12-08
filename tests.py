@@ -2,10 +2,13 @@ import unittest
 import pandas as pd
 import numpy as np
 from statsmodels.tsa.arima.model import ARIMA
+import os
 
 # File paths
-BANK_CSV = r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\01_myusabank_clean_data.csv"
-SP500_CSV = r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\02_S&P500(SPX)_clean_data.csv"
+BANK_CSV = os.path.join(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\01_myusabank_clean_data.csv")
+
+SP500_CSV = os.path.join(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\02_S&P500(SPX)_clean_data.csv")
+
 
 # Date range
 START_DATE = '2022-01-03'

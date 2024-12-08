@@ -1,13 +1,14 @@
 import pandas as pd
 import datetime
 from statsmodels.tsa.arima.model import ARIMA
+import os
 
 # Load the bank data
-df = pd.read_csv(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\01_myusabank_clean_data.csv") 
+df = pd.read_csv(os.path.join(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\01_myusabank_clean_data.csv")) 
 df['Date'] = pd.to_datetime(df['Date'])
 
 # Load the S&P 500 data
-spx_df = pd.read_csv(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\02_S&P500(SPX)_clean_data.csv")
+spx_df = pd.read_csv(os.path.join(r"C:\Users\shres\Desktop\codekentucky\usabank-project\data\clean\02_S&P500(SPX)_clean_data.csv"))
 spx_df['Date'] = pd.to_datetime(spx_df['Date'])
 
 # Define the date range
